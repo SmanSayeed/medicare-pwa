@@ -1,8 +1,11 @@
 import React from "react";
 import SerialStatusBadge from "../../Atoms/Badge/SerialStatusBadge";
-import { formatTime } from "@/helpers/formatter";
+import { calculateDuration, formatDateTime, formatDurationToMinutes, formatTime } from "@/helpers/formatter";
+import { useSelector } from "react-redux";
 
 const PatientsSerialList = ({ appointments, isLoading, error }) => {
+  const user = useSelector((state) => state.user?.user);
+  const userId = user.id;
   return (
     <div className="p-1">
       {error && (
@@ -18,12 +21,15 @@ const PatientsSerialList = ({ appointments, isLoading, error }) => {
             <thead>
               <tr className="bg-gray-100">
                 <th className="border border-gray-300 px-4 py-2">Serial</th>
-                <th className="border border-gray-300 px-4 py-2">Patient Name</th>
+                <th className="border border-gray-300 px-4 py-2">
+                  Patient Name
+                </th>
                 <th className="border border-gray-300 px-4 py-2">Status</th>
                 {/* <th className="border border-gray-300 px-4 py-2">Doctor</th>
                 <th className="border border-gray-300 px-4 py-2">Department</th>
                 <th className="border border-gray-300 px-4 py-2">Date</th> */}
                 <th className="border border-gray-300 px-4 py-2">Time</th>
+                <th className="border border-gray-300 px-4 py-2">Duration</th>
               </tr>
             </thead>
             <tbody>
@@ -35,6 +41,8 @@ const PatientsSerialList = ({ appointments, isLoading, error }) => {
                     index > 0 &&
                     appointments.appointments[index - 1].appointment_status ===
                       "in_consultation";
+
+                  console.log("appointments", appointment);
 
                   return (
                     <tr
@@ -58,17 +66,46 @@ const PatientsSerialList = ({ appointments, isLoading, error }) => {
                           status={appointment.appointment_status || "unknown"}
                         />
                       </td>
-                      {/* <td className="border border-gray-300 px-4 py-2">
-                        {appointment.doctor_name || "N/A"}
+
+                      <td className="border border-gray-300 px-4 py-2">
+                        {formatTime(appointment.approx_appointment_time) ||
+                          "N/A"}
                       </td>
-                      <td className="border border-gray-300 px-4 py-2">
-                        {appointment.department_name || "N/A"}
-                      </td>
-                      <td className="border border-gray-300 px-4 py-2">
-                        {appointment.appointment_date || "N/A"}
-                      </td> */}
-                      <td className="border border-gray-300 px-4 py-2">
-                        {formatTime(appointment.approx_appointment_time) || "N/A"}
+                      <td className="border border-gray-300 px-4 py-2 text-xs-center">
+                        {appointment.consultation_time && (
+                          <>
+                            <p>
+                              {" "}
+                              {formatDateTime(
+                                appointment.consultation_start_time,
+                                "time"
+                              )}
+                              -
+                              {formatDateTime(
+                                appointment.consultation_end_time,
+                                "time"
+                              )}
+                              <br/>
+                              
+                                Duration: {calculateDuration(appointment.consultation_start_time, appointment.consultation_end_time)} minutes
+
+                              
+                            </p>
+                            {/* <p>
+                              <strong>Duration:</strong>{" "}
+                              <p>
+  <strong>Duration:</strong>{" "}
+  {appointment.consultation_start_time && appointment.consultation_end_time
+    ? `${Math.ceil(
+        (new Date(appointment.consultation_end_time) -
+          new Date(appointment.consultation_start_time)) /
+          (1000 * 60)
+      )} minutes`
+    : "N/A"}
+</p>
+                            </p> */}
+                          </>
+                        )}
                       </td>
                     </tr>
                   );

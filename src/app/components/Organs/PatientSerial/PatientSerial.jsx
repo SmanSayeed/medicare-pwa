@@ -37,6 +37,12 @@ export default function PatientSerial({ doctor_id, appointment_date, doctor_name
                 <p>Department: {department_name}</p>
                 <p>Appointment Date: {appointment_date}</p>
             </div>
+            <div className="my-3 shadow-lg p-4 text-center font-semibold text-lg">
+                    Current Serial:  
+                   { appointments?.appointments?.filter(appointment => appointment.appointment_status === 'in_consultation').map((appointment, index) => (
+                    <span className="font-semibold bg-blue-600 rounded-md ml-2 p-2 text-white" key={appointment.appointment_id}>{appointment.serial_number}</span>   
+                ))}
+            </div>
             <div className="flex justify-between items-center">
                 <h3>Appointments</h3>
                 <button
