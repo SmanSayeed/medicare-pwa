@@ -79,12 +79,7 @@ export default function InstallPWAButton() {
 
             {/* Show Open App button if app is already installed */}
             {isInStandaloneMode && (
-                <button
-                    onClick={handleOpenAppClick}
-                    className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-                >
-                    Open App
-                </button>
+                ""
             )}
 
             {/* Toast message */}
