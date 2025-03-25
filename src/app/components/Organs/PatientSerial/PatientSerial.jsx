@@ -4,15 +4,14 @@ import React, { useState, useEffect } from 'react';
 import FilterAppointments from '../../Molecules/Appointment/FilterAppointments';
 import PatientsSerialList from '../../Molecules/Appointment/PatientsSerialList';
 
-
-export default function PatientSerial({doctor_id,appointment_date,doctor_name,department_name}) {
+export default function PatientSerial({ doctor_id, appointment_date, doctor_name, department_name }) {
     const [doctorId, setDoctorId] = useState(doctor_id);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [status, setStatus] = useState('');
     const [departmentId, setDepartmentId] = useState('');
     const [fetchAppointment, { data: appointments, error, isLoading }] = useFetchAppointmentMutation();
-    const [appointmentData,setAppointmentData] = useState([]);
+    const [appointmentData, setAppointmentData] = useState([]);
 
     useEffect(() => {
         fetchAppointment({ doctor_id: parseInt(doctorId), start_date: appointment_date, end_date: appointment_date, appointment_status: status, department_id: departmentId });
@@ -22,8 +21,13 @@ export default function PatientSerial({doctor_id,appointment_date,doctor_name,de
         if (appointments) {
             setAppointmentData(appointments);
         }
-    },[appointments]);
-    console.log('appontment data ',appointmentData);
+    }, [appointments]);
+
+    const handleReload = () => {
+        fetchAppointment({ doctor_id: parseInt(doctorId), start_date: appointment_date, end_date: appointment_date, appointment_status: status, department_id: departmentId });
+    };
+
+    console.log('appointment data ', appointmentData);
 
     return (
         <div>
@@ -33,10 +37,16 @@ export default function PatientSerial({doctor_id,appointment_date,doctor_name,de
                 <p>Department: {department_name}</p>
                 <p>Appointment Date: {appointment_date}</p>
             </div>
-            <h3>Appointments</h3>
-          
-          
-            <PatientsSerialList 
+            <div className="flex justify-between items-center">
+                <h3>Appointments</h3>
+                <button
+                    onClick={handleReload}
+                    className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                    <i className="bi bi-arrow-clockwise"></i> Reload
+                </button>
+            </div>
+            <PatientsSerialList
                 appointments={appointments}
                 isLoading={isLoading}
                 error={error}
