@@ -3,9 +3,10 @@ import SerialStatusBadge from "../../Atoms/Badge/SerialStatusBadge";
 import { calculateDuration, formatDateTime, formatDurationToMinutes, formatTime } from "@/helpers/formatter";
 import { useSelector } from "react-redux";
 
-const PatientsSerialList = ({ appointments, isLoading, error }) => {
+const PatientsSerialList = ({ setPatientSerial, appointments, isLoading, error }) => {
   const user = useSelector((state) => state.user?.user);
-  const userId = user.id;
+  const userId = JSON.stringify(user.id);
+  console.log("User id ", userId);
   return (
     <div className="p-1">
       {error && (
@@ -41,9 +42,10 @@ const PatientsSerialList = ({ appointments, isLoading, error }) => {
                     index > 0 &&
                     appointments.appointments[index - 1].appointment_status ===
                       "in_consultation";
-
-                  console.log("appointments", appointment);
-
+                  if(appointment.patient_id === userId){
+                    setPatientSerial(appointment.serial_number);
+                  }
+                
                   return (
                     <tr
                       key={appointment.appointment_id}

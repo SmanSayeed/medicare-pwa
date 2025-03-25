@@ -1,3 +1,5 @@
+
+
   // Helper function to format time
   export const formatTime = (timeString) => {
     const [hour, minute] = timeString.split(":");
@@ -6,7 +8,7 @@
     return date.toLocaleString("en-US", { hour: "numeric", minute: "numeric", hour12: true });
   };
 
-
+ 
    // Helper function to format date
    export const formatDate = (dateString) => {
     const date = new Date(dateString);
