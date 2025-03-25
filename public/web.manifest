@@ -1,0 +1,49 @@
+{
+  "name": "CliniqueX",
+  "short_name": "CliniqueX",
+  "theme_color": "#8936FF",
+  "background_color": "#333333",
+  "start_url": "/",
+  "id": "CliniqueX",
+  "display": "standalone",
+  "description": "CliniqueX helps to track queues in clinique or medical",
+  "icons": [
+    {
+      "purpose": "maskable",
+      "sizes": "512x512",
+      "src": "icon_maskable.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "icon512_rounded.png",
+      "type": "image/png"
+    },
+    {
+      "src": "icon512_rounded.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "ss1.png",
+      "type": "image/png",
+      "sizes": "1080x1920",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "ss.png",
+      "type": "image/png",
+      "sizes": "1080x1920",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "ss3.png",
+      "type": "image/png",
+      "sizes": "1080x1920",
+      "form_factor": "wide"
+    }
+  ]
+}
