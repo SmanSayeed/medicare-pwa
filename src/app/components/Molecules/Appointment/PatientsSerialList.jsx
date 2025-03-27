@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 const PatientsSerialList = ({ setPatientSerial, appointments, isLoading, error }) => {
   const user = useSelector((state) => state.user?.user);
-  const userId = JSON.stringify(user.id);
+  const userId = user?.id && JSON.stringify(user?.id);
   console.log("User id ", userId);
   return (
     <div className="p-1">
